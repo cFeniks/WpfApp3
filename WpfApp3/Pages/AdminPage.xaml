@@ -1,0 +1,68 @@
+﻿<Page x:Class="WpfApp3.Pages.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="clr-namespace:WpfApp3.Controls"
+      Title="Панель администратора">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="30,0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+            <TextBox x:Name="SearchBar"
+                     Height="30"
+                     Width="170"
+                     Margin="0,0,10,0"
+                     VerticalContentAlignment="Center"
+                     TextChanged="FilterChanged"/>
+
+            <ComboBox x:Name="SupplierComboBox"
+                      Height="30"
+                      Width="180"
+                      Margin="0,0,10,0"
+                      SelectionChanged="FilterChanged"/>
+
+            <ComboBox x:Name="SortComboBox"
+                      Height="30"
+                      Width="180"
+                      Margin="0,0,10,0"
+                      SelectionChanged="FilterChanged">
+                <ComboBoxItem Content="Без сортировки"/>
+                <ComboBoxItem Content="Количество ↑"/>
+                <ComboBoxItem Content="Количество ↓"/>
+            </ComboBox>
+
+            <Button Content="Добавить"
+                    Height="30"
+                    Width="80"
+                    Margin="0,0,10,0"
+                    Click="AddButton_Click"/>
+
+            <Button Content="Редактировать"
+                    Height="30"
+                    Width="110"
+                    Margin="0,0,10,0"
+                    Click="EditButton_Click"/>
+
+            <Button Content="Удалить"
+                    Height="30"
+                    Width="80"
+                    Margin="0,0,10,0"
+                    Click="DeleteButton_Click"/>
+
+            <Button Content="Заказы"
+                    Height="30"
+                    Width="90"
+                    Click="OrdersButton_Click"/>
+        </StackPanel>
+
+        <controls:ProductListControl x:Name="ProductList"
+                                      Grid.Row="1"/>
+    </Grid>
+</Page>
