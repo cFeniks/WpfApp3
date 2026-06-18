@@ -7,6 +7,7 @@ using WpfApp3.Services;
 
 namespace WpfApp3.Pages
 {
+    // страница администратора - каталог товаров с управлением и переходом к заказам
     public partial class AdminPage : Page
     {
         private readonly ProductService _productService = new();
@@ -15,6 +16,7 @@ namespace WpfApp3.Pages
         {
             InitializeComponent();
 
+            // только администратор может выбирать и редактировать карточки
             ProductList.CanSelect = true;
 
             Loaded += AdminPage_Loaded;
@@ -24,9 +26,11 @@ namespace WpfApp3.Pages
         {
             await LoadSuppliersAsync();
 
+            // установка сортировки запускает применение фильтров
             SortComboBox.SelectedIndex = 0;
         }
 
+        // заполняет список поставщиков для фильтра
         private async Task LoadSuppliersAsync()
         {
             try
@@ -55,11 +59,13 @@ namespace WpfApp3.Pages
             }
         }
 
+        // любой из фильтров изменился - применяем заново
         private void FilterChanged(object sender, RoutedEventArgs e)
         {
             ApplyFilters();
         }
 
+        // применяет к каталогу поиск, фильтр по поставщику и сортировку
         private void ApplyFilters()
         {
             string supplierName = SupplierComboBox.SelectedItem?.ToString() ?? "Все поставщики";
@@ -71,6 +77,7 @@ namespace WpfApp3.Pages
             );
         }
 
+        // добавление нового товара
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             ProductEditWindow window = new ProductEditWindow();
@@ -85,6 +92,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // редактирование выбранного товара
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
             Product? product = ProductList.SelectedProduct;
@@ -113,6 +121,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // удаление выбранного товара
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             Product? product = ProductList.SelectedProduct;
@@ -177,6 +186,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // переход к заказам с правами администратора
         private void OrdersButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new OrdersPage(true));

@@ -6,14 +6,17 @@ using WpfApp3.Models;
 
 namespace WpfApp3
 {
+    // окно добавления и редактирования позиции заказа
     public partial class OrderEditWindow : Window
     {
         private readonly OrderService _orderService = new();
 
         private readonly ProductService _productService = new();
 
+        // id позиции - null означает режим добавления
         private readonly int? _ordersItemId;
 
+        // режим добавления
         public OrderEditWindow()
         {
             InitializeComponent();
@@ -25,6 +28,7 @@ namespace WpfApp3
             Loaded += OrderEditWindow_Loaded;
         }
 
+        // режим редактирования
         public OrderEditWindow(int ordersItemId)
         {
             InitializeComponent();
@@ -36,14 +40,17 @@ namespace WpfApp3
             Loaded += OrderEditWindow_Loaded;
         }
 
+        // загрузка списков из бд и данных позиции при редактировании
         private async void OrderEditWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            // артикулы и пункты выдачи берём из бд
             ArticleBox.ItemsSource = await _productService.GetArticlesAsync();
 
             PickupPointBox.ItemsSource = await _orderService.GetPickupPointsAsync();
             PickupPointBox.DisplayMemberPath = "Address";
             PickupPointBox.SelectedValuePath = "Id";
 
+            // режим добавления - значения по умолчанию
             if (!_ordersItemId.HasValue)
             {
                 OrderDatePicker.SelectedDate = DateTime.Today;
@@ -52,6 +59,7 @@ namespace WpfApp3
                 return;
             }
 
+            // режим редактирования - подставляем данные позиции
             OrderRowModel? order = await _orderService.GetOrderItemByIdAsync(_ordersItemId.Value);
 
             if (order == null)
@@ -75,6 +83,7 @@ namespace WpfApp3
             SelectStatus(order.Status);
         }
 
+        // сохранение - добавление нового заказа или обновление позиции
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateFields())
@@ -132,6 +141,7 @@ namespace WpfApp3
             }
         }
 
+        // проверка заполнения полей
         private bool ValidateFields()
         {
             if (ArticleBox.SelectedItem == null)
@@ -209,6 +219,7 @@ namespace WpfApp3
             return true;
         }
 
+        // выбирает статус в списке по названию
         private void SelectStatus(string status)
         {
             foreach (ComboBoxItem item in StatusBox.Items)
@@ -223,6 +234,7 @@ namespace WpfApp3
             StatusBox.SelectedIndex = 0;
         }
 
+        // закрытие без сохранения
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();

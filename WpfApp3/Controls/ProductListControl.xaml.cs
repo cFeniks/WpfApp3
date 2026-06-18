@@ -20,7 +20,7 @@ namespace WpfApp3.Controls
 
         public Product? SelectedProduct { get; private set; }
 
-        // Разрешает выбор и редактирование карточек.
+        // разрешает выбор и редактирование карточек - включается только у администратора
         public bool CanSelect { get; set; } = false;
 
         public ProductListControl()
@@ -33,6 +33,7 @@ namespace WpfApp3.Controls
             await ReloadProductsAsync();
         }
 
+        // загружает товары из бд в список карточек
         public async Task ReloadProductsAsync()
         {
             try
@@ -52,6 +53,7 @@ namespace WpfApp3.Controls
             }
         }
 
+        // фильтрует и сортирует товары - поиск, поставщик, сортировка по количеству
         public void ApplyFilters(string searchText, string supplierName, int sortIndex)
         {
             IEnumerable<Product> result = _products;
@@ -95,9 +97,10 @@ namespace WpfApp3.Controls
                    value.ToLower().Contains(searchText);
         }
 
+        // лкм - выбор карточки товара
         private void ProductCard_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Выбор карточки доступен только администратору
+            // выбор доступен только администратору
             if (!CanSelect)
                 return;
 
@@ -119,9 +122,10 @@ namespace WpfApp3.Controls
             _selectedBorder = border;
         }
 
+        // пкм - открыть редактирование товара
         private void ProductCard_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Редактирование карточки доступно только администратору
+            // редактирование доступно только администратору
             if (!CanSelect)
                 return;
 

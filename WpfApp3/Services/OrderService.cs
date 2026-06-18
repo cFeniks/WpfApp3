@@ -4,8 +4,10 @@ using WpfApp3.Models;
 
 namespace WpfApp3.Services
 {
+    // работа с заказами и пунктами выдачи
     public class OrderService
     {
+        // список пунктов выдачи для выпадающего списка
         public async Task<List<PickupPointRow>> GetPickupPointsAsync()
         {
             await using var db = new AppDbContext();
@@ -25,6 +27,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // все позиции заказов для списка карточек
         public async Task<List<OrderRowModel>> GetOrdersAsync()
         {
             await using var db = new AppDbContext();
@@ -53,6 +56,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // данные одной позиции заказа для редактирования
         public async Task<OrderRowModel?> GetOrderItemByIdAsync(int ordersItemId)
         {
             await using var db = new AppDbContext();
@@ -78,6 +82,7 @@ namespace WpfApp3.Services
                 .FirstOrDefaultAsync();
         }
 
+        // создаёт новый заказ с одним товаром
         public async Task AddOrderAsync(OrderRowModel orderRow)
         {
             await using var db = new AppDbContext();
@@ -132,6 +137,7 @@ namespace WpfApp3.Services
             await db.SaveChangesAsync();
         }
 
+        // обновляет выбранную позицию и общие поля её заказа
         public async Task UpdateOrderAsync(OrderRowModel orderRow)
         {
             await using var db = new AppDbContext();
@@ -184,6 +190,7 @@ namespace WpfApp3.Services
             await db.SaveChangesAsync();
         }
 
+        // удаляет позицию, а если она последняя - удаляет и заказ
         public async Task DeleteOrderItemAsync(int ordersItemId)
         {
             await using var db = new AppDbContext();

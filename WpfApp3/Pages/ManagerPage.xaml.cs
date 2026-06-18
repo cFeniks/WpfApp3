@@ -6,6 +6,7 @@ using WpfApp3.Services;
 
 namespace WpfApp3.Pages
 {
+    // страница менеджера - просмотр каталога и заказов без управления товарами
     public partial class ManagerPage : Page
     {
         private readonly ProductService _productService = new();
@@ -21,9 +22,11 @@ namespace WpfApp3.Pages
         {
             await LoadSuppliersAsync();
 
+            // установка сортировки запускает применение фильтров
             SortComboBox.SelectedIndex = 0;
         }
 
+        // заполняет список поставщиков для фильтра
         private async Task LoadSuppliersAsync()
         {
             try
@@ -52,11 +55,13 @@ namespace WpfApp3.Pages
             }
         }
 
+        // любой из фильтров изменился - применяем заново
         private void FilterChanged(object sender, RoutedEventArgs e)
         {
             ApplyFilters();
         }
 
+        // применяет к каталогу поиск, фильтр по поставщику и сортировку
         private void ApplyFilters()
         {
             string supplierName = SupplierComboBox.SelectedItem?.ToString() ?? "Все поставщики";
@@ -68,6 +73,7 @@ namespace WpfApp3.Pages
             );
         }
 
+        // переход к заказам только для просмотра - без кнопок добавления и удаления
         private void OrdersButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new OrdersPage(false));

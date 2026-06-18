@@ -2,9 +2,7 @@
 
 namespace WpfApp3.Pages
 {
-    /// <summary>
-    /// Interaction logic for GuestPage.xaml
-    /// </summary>
+    // страница гостя - только просмотр каталога товаров
     public partial class GuestPage : Page
     {
         public GuestPage()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace WpfApp3.Models;
 
+// заказ - может содержать несколько позиций (OrdersItem)
 public partial class Order
 {
     public int OrdersId { get; set; }

@@ -27,6 +27,7 @@ namespace WpfApp3
             InitializeComponent();
         }
 
+        // роли пользователей - значения совпадают с role_id в бд
         public enum UserRole
         {
             Admin = 1,
@@ -34,12 +35,14 @@ namespace WpfApp3
             User = 3
         }
 
+        // данные текущего пользователя на время работы приложения
         public static class CurrentUser
         {
             public static UserRole Role { get; set; }
             public static string FullName { get; set; } = "";
         }
 
+        // открывает главное окно и закрывает текущее
         private void GotoMainWindow(string fullname, string role)
         {
             MainWindow mainWindow = new MainWindow(fullname, role);
@@ -48,6 +51,7 @@ namespace WpfApp3
             Close();
         }
 
+        // проверка логина и пароля и вход в систему
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text.Trim();
@@ -92,6 +96,7 @@ namespace WpfApp3
             }
         }
 
+        // вход как гость без проверки данных
         private void GuestButton_Click(object sender, RoutedEventArgs e)
         {
             GotoMainWindow("Гость", "гость");

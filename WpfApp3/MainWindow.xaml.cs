@@ -33,6 +33,7 @@ namespace WpfApp3
             OpenPageByRole();
         }
 
+        // открывает нужную страницу в зависимости от роли
         private void OpenPageByRole()
         {
             switch (_role)
@@ -56,6 +57,7 @@ namespace WpfApp3
             }
         }
 
+        // русское название роли для шапки окна
         private static string GetRoleDisplayName(string role)
         {
             return role switch
@@ -67,6 +69,7 @@ namespace WpfApp3
             };
         }
 
+        // переход на предыдущую страницу
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (MainFrame.CanGoBack)
@@ -75,6 +78,7 @@ namespace WpfApp3
             }
         }
 
+        // обновляет заголовок страницы и доступность кнопки назад
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
             BackButton.IsEnabled = MainFrame.CanGoBack;
@@ -85,6 +89,7 @@ namespace WpfApp3
             }
         }
 
+        // выход - возврат к окну входа
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = new LoginWindow();

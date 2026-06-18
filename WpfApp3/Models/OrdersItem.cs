@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace WpfApp3.Models;
 
+// позиция заказа - один товар в заказе с количеством
 public partial class OrdersItem
 {
     public int OrdersItemId { get; set; }

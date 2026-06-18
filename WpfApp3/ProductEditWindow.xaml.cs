@@ -9,16 +9,20 @@ using WpfApp3.Services;
 
 namespace WpfApp3
 {
+    // окно добавления и редактирования товара
     public partial class ProductEditWindow : Window
     {
         private readonly ProductService _productService = new();
 
+        // id товара - null означает режим добавления
         private readonly int? _productId;
 
+        // текущий путь к фото и путь к только что выбранному файлу
         private string? _photoPath;
 
         private string? _newImageSourcePath;
 
+        // режим добавления товара
         public ProductEditWindow()
         {
             InitializeComponent();
@@ -32,6 +36,7 @@ namespace WpfApp3
             Loaded += ProductEditWindow_Loaded;
         }
 
+        // режим редактирования товара
         public ProductEditWindow(int productId)
         {
             InitializeComponent();
@@ -43,6 +48,7 @@ namespace WpfApp3
             Loaded += ProductEditWindow_Loaded;
         }
 
+        // загрузка справочников и данных товара
         private async void ProductEditWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadComboBoxesAsync();
@@ -57,6 +63,7 @@ namespace WpfApp3
             }
         }
 
+        // заполняет выпадающие списки справочников
         private async Task LoadComboBoxesAsync()
         {
             CategoryBox.ItemsSource = await _productService.GetCategoriesAsync();
@@ -76,6 +83,7 @@ namespace WpfApp3
             UnitBox.SelectedValuePath = "UnitsId";
         }
 
+        // подставляет данные товара в поля
         private async Task LoadProductAsync(int productId)
         {
             Product? product = await _productService.GetProductByIdAsync(productId);
@@ -111,6 +119,7 @@ namespace WpfApp3
             SetPreviewImage(_photoPath);
         }
 
+        // выбор файла изображения
         private void SelectPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -126,6 +135,7 @@ namespace WpfApp3
             PreviewImage.Source = new BitmapImage(new Uri(_newImageSourcePath));
         }
 
+        // сохранение - добавление или обновление товара
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateFields(out int price, out int quantity, out int discount))
@@ -196,6 +206,7 @@ namespace WpfApp3
             }
         }
 
+        // проверка полей и разбор чисел
         private bool ValidateFields(out int price, out int quantity, out int discount)
         {
             price = 0;
@@ -268,9 +279,10 @@ namespace WpfApp3
             return true;
         }
 
+        // копирует выбранное фото в папку Resources проекта и возвращает путь к нему
         private string SaveImage(string sourcePath, string? oldRelativePath)
         {
-            
+            // папка Resources в корне проекта - на 3 уровня выше папки сборки
             string projectRoot = Path.GetFullPath(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..", "Resources")
             );
@@ -279,12 +291,13 @@ namespace WpfApp3
 
             string targetPath = Path.Combine(projectRoot, fileName);
 
-            
+            // просто копируем выбранный файл
             File.Copy(sourcePath, targetPath, overwrite: true);
 
             return targetPath;
         }
 
+        // показывает фото товара или заглушку, если его нет
         private void SetPreviewImage(string? relativePath)
         {
             string imagePath;
@@ -317,6 +330,7 @@ namespace WpfApp3
             PreviewImage.Source = new BitmapImage(new Uri(imagePath));
         }
 
+        // закрытие без сохранения
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();

@@ -2,9 +2,7 @@
 
 namespace WpfApp3.Pages
 {
-    /// <summary>
-    /// Interaction logic for ClientPage.xaml
-    /// </summary>
+    // страница пользователя - только просмотр каталога товаров
     public partial class ClientPage : Page
     {
         public ClientPage()

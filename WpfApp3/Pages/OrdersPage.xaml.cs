@@ -6,10 +6,12 @@ using WpfApp3.Models;
 
 namespace WpfApp3.Pages
 {
+    // страница со списком позиций заказов
     public partial class OrdersPage : Page
     {
         private readonly OrderService _orderService = new();
 
+        // от роли зависит видимость кнопок добавления и удаления
         private readonly bool _isAdmin;
 
         public OrdersPage(bool isAdmin)
@@ -21,6 +23,7 @@ namespace WpfApp3.Pages
 
         private async void OrdersPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // кнопки управления показываем только администратору
             AdminButtonsPanel.Visibility = _isAdmin
                 ? Visibility.Visible
                 : Visibility.Collapsed;
@@ -28,6 +31,7 @@ namespace WpfApp3.Pages
             await LoadOrdersAsync();
         }
 
+        // загружает список заказов из бд
         private async Task LoadOrdersAsync()
         {
             try
@@ -45,6 +49,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // добавление новой позиции заказа
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             OrderEditWindow window = new OrderEditWindow();
@@ -57,6 +62,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // редактирование выбранной позиции
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (OrdersList.SelectedItem is not OrderRowModel selectedOrder)
@@ -81,6 +87,7 @@ namespace WpfApp3.Pages
             }
         }
 
+        // удаление выбранной позиции
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (OrdersList.SelectedItem is not OrderRowModel selectedOrder)

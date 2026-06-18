@@ -1,6 +1,6 @@
 namespace WpfApp3.Models
 {
-    // Строка для выпадающего списка пунктов выдачи.
+    // строка для выпадающего списка пунктов выдачи
     public class PickupPointRow
     {
         public int Id { get; set; }

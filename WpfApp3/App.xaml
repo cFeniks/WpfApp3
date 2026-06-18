@@ -4,6 +4,22 @@
              xmlns:local="clr-namespace:WpfApp3"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
-         
+
+        <!-- единый шрифт на всё приложение - наследуется всеми окнами и страницами -->
+        <Style TargetType="Window">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- единый вид всех кнопок приложения -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
     </Application.Resources>
 </Application>

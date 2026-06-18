@@ -5,8 +5,10 @@ using WpfApp3.Models;
 
 namespace WpfApp3.Services
 {
+    // работа с товарами и справочниками
     public class ProductService
     {
+        // все товары со связанными данными для каталога
         public async Task<List<Product>> GetProductsAsync()
         {
             await using var db = new AppDbContext();
@@ -20,6 +22,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // артикулы товаров для выпадающего списка
         public async Task<List<string>> GetArticlesAsync()
         {
             await using var db = new AppDbContext();
@@ -31,6 +34,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // удаляет товар, если он не используется в заказах
         public async Task<bool> DeleteProductAsync(int productId)
         {
             await using var db = new AppDbContext();
@@ -51,6 +55,7 @@ namespace WpfApp3.Services
 
             return true;
         }
+        // справочник категорий
         public async Task<List<Category>> GetCategoriesAsync()
         {
             await using var db = new AppDbContext();
@@ -61,6 +66,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // справочник производителей
         public async Task<List<Manufacturer>> GetManufacturersAsync()
         {
             await using var db = new AppDbContext();
@@ -71,6 +77,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // справочник поставщиков
         public async Task<List<Supplier>> GetSuppliersAsync()
         {
             await using var db = new AppDbContext();
@@ -81,6 +88,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // справочник единиц измерения
         public async Task<List<Unit>> GetUnitsAsync()
         {
             await using var db = new AppDbContext();
@@ -91,6 +99,7 @@ namespace WpfApp3.Services
                 .ToListAsync();
         }
 
+        // один товар по id для редактирования
         public async Task<Product?> GetProductByIdAsync(int productId)
         {
             await using var db = new AppDbContext();
@@ -100,6 +109,7 @@ namespace WpfApp3.Services
                 .FirstOrDefaultAsync(product => product.ProductsId == productId);
         }
 
+        // добавляет товар, при пустом артикуле генерирует его
         public async Task AddProductAsync(Product product)
         {
             await using var db = new AppDbContext();
@@ -120,6 +130,7 @@ namespace WpfApp3.Services
             await db.SaveChangesAsync();
         }
 
+        // генерирует уникальный артикул вида А112Т4 - буква, 3 цифры, буква, 1 цифра
         private static async Task<string> GenerateArticleAsync(AppDbContext db)
         {
             const string letters = "АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ";
@@ -145,6 +156,7 @@ namespace WpfApp3.Services
             return article;
         }
 
+        // сохраняет изменения товара
         public async Task UpdateProductAsync(Product updatedProduct)
         {
             await using var db = new AppDbContext();
